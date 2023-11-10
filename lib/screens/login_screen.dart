@@ -37,11 +37,11 @@ class LoginScreen extends ConsumerWidget {
           label: const Text(
             'sign in with google',
             style: TextStyle(
-              color: kBlackColors,
+              color: kBlackColor,
             ),
           ),
           style: ElevatedButton.styleFrom(
-              backgroundColor: kWhiteColors, minimumSize: const Size(150, 50)),
+              backgroundColor: kWhiteColor, minimumSize: const Size(150, 50)),
         ),
       ),
     );
