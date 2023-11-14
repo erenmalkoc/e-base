@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_base/colors.dart';
 import 'package:e_base/common/widgets/loader.dart';
 import 'package:e_base/models/document_model.dart';
@@ -42,6 +44,15 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
           _controller?.selection ?? const TextSelection.collapsed(offset: 0),
           quill.ChangeSource.REMOTE);
     });
+    
+/*   Timer.periodic(const Duration(seconds: 2),(timer){
+     socketRepository.autoSave(<String,dynamic>{
+       'delta':_controller!.document.toDelta(),
+       'room':widget.id,
+     });
+   });
+    */
+    
   }
 
   fetchDocumentData() async {
@@ -61,7 +72,7 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
       setState(() {});
     }
     _controller!.document.changes.listen((event) {
-      if (event.before == quill.ChangeSource.LOCAL) {
+      if (event.source == quill.ChangeSource.LOCAL) {
         Map<String, dynamic> map = {
           'delta': event.change,
           'room': widget.id,
@@ -98,8 +109,10 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton.icon(
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: 'http://localhost:3000/#/document/${widget.id}')).then(
-                      (value) {
+                Clipboard.setData(ClipboardData(
+                        text: 'http://localhost:3000/#/document/${widget.id}'))
+                    .then(
+                  (value) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
@@ -166,28 +179,34 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-
-            const SizedBox(height: 10),
-            Expanded(
-              child: SizedBox(
-                width: 750,
-                child: Card(
-                  color: kWhiteColor,
-                  elevation: 5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: quill.QuillEditor.basic(
-
+      body: quill.QuillProvider(
+        configurations: quill.QuillConfigurations(
+          controller: _controller!,
+          sharedConfigurations: const quill.QuillSharedConfigurations(
+            locale: Locale('en'),
+          ),
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              const quill.QuillToolbar(),
+              const SizedBox(height: 10),
+              Expanded(
+                child: SizedBox(
+                  width: 750,
+                  child: Card(
+                    color: kWhiteColor,
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: quill.QuillEditor.basic(),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
