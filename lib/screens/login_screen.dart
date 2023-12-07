@@ -18,6 +18,7 @@ class LoginScreen extends ConsumerWidget {
       ref.read(userProvider.notifier).update((state) => errorModel.data);
       navigator.replace('/');
     } else {
+      print(errorModel.error!);
       sMessenger.showSnackBar(SnackBar(content: Text(errorModel.error!)));
     }
   }

@@ -1,5 +1,6 @@
 import 'package:e_base/colors.dart';
 import 'package:e_base/common/widgets/loader.dart';
+import 'package:e_base/common/widgets/main_drawer.dart';
 import 'package:e_base/models/document_model.dart';
 import 'package:e_base/repository/document_repository.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,7 @@ import '../repository/auth_repository.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  void signOut(WidgetRef ref) {
-    ref.read(authRepositoryProvider).signOut();
-    ref.read(userProvider.notifier).update((state) => null);
-  }
+
 
   void createDocument(BuildContext context, WidgetRef ref) async {
     String token = ref.read(userProvider)!.token;
@@ -40,22 +38,26 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      drawer: const MainDrawer(),
       appBar: AppBar(
         backgroundColor: kWhiteColor,
+        title: const Text('Documents'),
         elevation: 0,
         actions: [
-          IconButton(
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton.icon(
               onPressed: () => createDocument(context, ref),
               icon: const Icon(
                 Icons.add_rounded,
-                color: kBlackColor,
-              )),
-          IconButton(
-              onPressed: () => signOut(ref),
-              icon: const Icon(
-                Icons.logout_rounded,
-                color: kBlackColor,
-              ))
+                size: 16,
+              ),
+              label: const Text(
+                'New Document',
+              ),
+            ),
+          ),
+
         ],
       ),
       body: FutureBuilder(
@@ -67,9 +69,20 @@ class HomeScreen extends ConsumerWidget {
             return const Loader();
           }
 
+          if (snapshot.hasError) {
+            return const Center(
+                child: Text('Error occurred while fetching data'));
+          }
+
+          if (snapshot.data == null || snapshot.data!.error != null) {
+            return const Center(
+                child: Text('Error occurred in data retrieval'));
+          }
+
+          List<DocumentModel> documents = snapshot.data!.data;
           return Center(
             child: ListView.builder(
-                itemCount: snapshot.data!.data.length,
+                itemCount: documents.length,
                 itemBuilder: (context, index) {
                   DocumentModel document = snapshot.data!.data[index];
                   return InkWell(

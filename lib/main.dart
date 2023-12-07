@@ -46,6 +46,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          useMaterial3: true
         ),
         routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
           final user = ref.watch(userProvider);

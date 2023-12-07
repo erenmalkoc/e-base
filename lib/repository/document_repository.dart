@@ -75,10 +75,11 @@ class DocumentRepository {
       );
       switch (res.statusCode) {
         case 200:
+          var decodedBody = jsonDecode(res.body);
           List<DocumentModel> documents = [];
 
-          for (int i = 0; i < jsonDecode(res.body).length; i++) {
-            documents.add(DocumentModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+          for (var document in decodedBody) {
+            documents.add(DocumentModel.fromJson(jsonEncode(document)));
           }
           error = ErrorModel(
             error: null,
@@ -100,6 +101,7 @@ class DocumentRepository {
     }
     return error;
   }
+
 
   void updateTitle({
     required String token,

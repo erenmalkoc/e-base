@@ -31,7 +31,7 @@ documentRouter.get("/docs/me", auth, async (req, res) => {
 documentRouter.post("/doc/title", auth, async (req, res) => {
     try {
         const { id, title } = req.body;
-        const document = await Document.findByIdAndUpdate(id, { title });
+        const document = await Document.findByIdAndUpdate(id, { title },{new : true});
 
         res.json(document);
     } catch (e) {

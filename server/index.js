@@ -10,8 +10,7 @@ const PORT = process.env.PORT | 3001;
 
 const app = express();
 var server = http.createServer(app);
-const io = require("socket.io")(server);
-
+var io = require("socket.io")(server);
 
 app.use(cors());
 app.use(express.json());
@@ -26,9 +25,8 @@ mongoose
         console.log("Connection successful!");
     })
     .catch((err) => {
-        console.error("Error connecting to MongoDB:", err);
+        console.log(err);
     });
-
 
 io.on("connection", (socket) => {
     socket.on("join", (documentId) => {
@@ -36,11 +34,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on("typing", (data) => {
-        console.log(`calısiyorrr`);
-
-        socket.broadcast.to(data.documentId).emit("changes", data);
+        socket.broadcast.to(data.room).emit("changes", data);
     });
-
 
     socket.on("save", (data) => {
         saveData(data);
@@ -48,10 +43,17 @@ io.on("connection", (socket) => {
 });
 
 const saveData = async (data) => {
-    let document = await Document.findById(data.room);
-    document.content = data.delta;
-    document = await document.save();
-};
+    try {
+        let document = await Document.findById(data.room);
+        if(!document) {
+            return;
+        }
+        document.content = data.delta;
+        await document.save();
+    } catch (err) {
+        console.log('error saving data : ', err);
+    }
+}
 
 server.listen(PORT, "0.0.0.0", () => {
     console.log(`connected at port ${PORT}`);

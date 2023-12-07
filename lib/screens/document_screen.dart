@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:e_base/colors.dart';
+import 'package:e_base/common/widgets/custom_fab.dart';
 import 'package:e_base/common/widgets/loader.dart';
 import 'package:e_base/models/document_model.dart';
 import 'package:e_base/repository/auth_repository.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 
+import '../common/widgets/action_button.dart';
 import '../models/error_model.dart';
 
 class DocumentScreen extends ConsumerStatefulWidget {
@@ -44,15 +46,13 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
           _controller?.selection ?? const TextSelection.collapsed(offset: 0),
           quill.ChangeSource.REMOTE);
     });
-    
-/*   Timer.periodic(const Duration(seconds: 2),(timer){
-     socketRepository.autoSave(<String,dynamic>{
-       'delta':_controller!.document.toDelta(),
-       'room':widget.id,
-     });
-   });
-    */
-    
+
+    Timer.periodic(const Duration(seconds: 2), (timer) {
+      socketRepository.autoSave(<String, dynamic>{
+        'delta': _controller!.document.toDelta(),
+        'room': widget.id,
+      });
+    });
   }
 
   fetchDocumentData() async {
@@ -101,10 +101,65 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
       );
     }
     return Scaffold(
+      floatingActionButton: const CustomFab(),
       appBar: AppBar(
         backgroundColor: kWhiteColor,
         elevation: 0,
         actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(
+                        text: 'http://localhost:3000/#/document/${widget.id}'))
+                    .then(
+                  (value) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'soon',
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.delete_rounded,
+                size: 16,
+              ),
+              label: const Text(
+                'Delete',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(
+                        text: 'http://localhost:3000/#/document/${widget.id}'))
+                    .then(
+                  (value) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'soon',
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.edit,
+                size: 16,
+              ),
+              label: const Text(
+                'Request edit access',
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton.icon(
@@ -127,9 +182,8 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
                 Icons.lock,
                 size: 16,
               ),
-              label: const Text('Share'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kBlueColor,
+              label: const Text(
+                'Share',
               ),
             ),
           ),
@@ -139,14 +193,14 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () {
-                  Routemaster.of(context).replace('/');
-                },
-                child: Image.asset(
-                  'assets/images/docs-logo.png',
-                  height: 40,
-                ),
-              ),
+                  onTap: () {
+                    Routemaster.of(context).replace('/');
+                  },
+                  child: const Icon(
+                    Icons.description_rounded,
+                    size: 30,
+                    color: Colors.deepPurpleAccent,
+                  )),
               const SizedBox(width: 10),
               SizedBox(
                 width: 180,
@@ -159,7 +213,7 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
                         color: kBlueColor,
                       ),
                     ),
-                    contentPadding: EdgeInsets.only(left: 10),
+                    contentPadding: EdgeInsets.only(left: 100),
                   ),
                   onSubmitted: (value) => updateTitle(ref, value),
                 ),
