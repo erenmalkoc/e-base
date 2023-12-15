@@ -117,7 +117,7 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
-                          'soon',
+                          'soon...',
                         ),
                       ),
                     );
