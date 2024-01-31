@@ -41,7 +41,7 @@ dependencies:
   shared_preferences: ^2.0.15
   routemaster: ^1.0.1
   socket_io_client: ^1.0.2
-  flutter_quill: ^8.1.1
+  flutter_quill: ^9.2.10
   loading_indicator: ^3.1.1
 
 dev_dependencies:

@@ -10,6 +10,7 @@ import 'package:e_base/repository/socket_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -41,10 +42,7 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
     socketRepository.joinRoom(widget.id);
     fetchDocumentData();
     socketRepository.changeListener((data) {
-      _controller?.compose(
-          quill.Delta.fromJson(data['delta']),
-          _controller?.selection ?? const TextSelection.collapsed(offset: 0),
-          quill.ChangeSource.REMOTE);
+      _controller?.document.toDelta().toJson();
     });
 
     Timer.periodic(const Duration(seconds: 2), (timer) {
@@ -64,21 +62,19 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
       _controller = quill.QuillController(
         document: errorModel!.data.content.isEmpty
             ? quill.Document()
-            : quill.Document.fromDelta(
-                quill.Delta.fromJson(errorModel!.data.content),
-              ),
+            : quill.Document.fromJson(errorModel!.data.content),
         selection: const TextSelection.collapsed(offset: 0),
       );
       setState(() {});
     }
     _controller!.document.changes.listen((event) {
-      if (event.source == quill.ChangeSource.LOCAL) {
-        Map<String, dynamic> map = {
-          'delta': event.change,
-          'room': widget.id,
-        };
-        socketRepository.typing(map);
-      }
+      // if (event.source == quill.Document.) {
+      //   Map<String, dynamic> map = {
+      //     'delta': event.change,
+      //     'room': widget.id,
+      //   };
+      //   socketRepository.typing(map);
+      // }
     });
   }
 
@@ -233,18 +229,26 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
           ),
         ),
       ),
-      body: quill.QuillProvider(
-        configurations: quill.QuillConfigurations(
+      body: quill.QuillEditorProvider(
+        editorConfigurations: quill.QuillEditorConfigurations(
           controller: _controller!,
           sharedConfigurations: const quill.QuillSharedConfigurations(
             locale: Locale('en'),
           ),
         ),
+      
         child: Center(
           child: Column(
             children: [
               const SizedBox(height: 10),
-              const quill.QuillToolbar(),
+             quill.QuillToolbar.simple(
+                configurations: QuillSimpleToolbarConfigurations(
+                  controller: _controller!,
+                  sharedConfigurations: const QuillSharedConfigurations(
+                    locale: Locale('tr'),
+                  ),
+                ),
+              ),
               const SizedBox(height: 10),
               Expanded(
                 child: SizedBox(
@@ -254,7 +258,12 @@ class _DocumentScreenState extends ConsumerState<DocumentScreen> {
                     elevation: 5,
                     child: Padding(
                       padding: const EdgeInsets.all(30.0),
-                      child: quill.QuillEditor.basic(),
+                      child: quill.QuillEditor.basic(   configurations: QuillEditorConfigurations(
+                        controller: _controller!,
+                        readOnly: false,
+                        sharedConfigurations: const QuillSharedConfigurations(
+                          locale: Locale('tr'),
+                        ),)),
                     ),
                   ),
                 ),

@@ -43,7 +43,7 @@ class AuthRepository {
             uid: '',
             token: '');
 
-        var res = await _client.post(Uri.parse('$hostMobil/api/signup'),
+        var res = await _client.post(Uri.parse('$hostOne/api/signup'),
             body: userAcc.toJson(),
             headers: {
               'Content-Type': 'application/json; charset=UTF-8',
@@ -74,7 +74,7 @@ class AuthRepository {
     try {
       String? token = await _localStorageRepository.getToken();
       if (token != null) {
-        var res = await _client.get(Uri.parse('$hostMobil/'), headers: {
+        var res = await _client.get(Uri.parse('$hostOne/'), headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': token,
         });
