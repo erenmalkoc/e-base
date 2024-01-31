@@ -1,6 +1,6 @@
 # e-base File Editing Web App (Flutter/Dart)
 ## Tech. I use :
-### -Node.js, -Express.js, -MongoDB, -Flutter/Dart, -Quill, -Riverpod.
+### -Node.js, -Socket.io(for real-time changes) -Express.js, -MongoDB, -Flutter/Dart, -Quill, -Riverpod.
 ## Before start :
 #### -Change the api url in the constants.dart file to your api url.
 
