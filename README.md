@@ -1,16 +1,24 @@
-# e_base
+# e-base File Editing Web App (Flutter/Dart)
+## Tech. I use :
+### -Node.js, -Express.js, -MongoDB, -Flutter/Dart, -Quill, -Riverpod.
+## Before start :
+#### -Change the api url in the constants.dart file to your api url.
 
-e-base app
+#### -Run this command in the terminal to get the dependencies: 'flutter pub get'.
 
-## Getting Started
+#### -Run this command in the terminal to launch project: 'flutter run -d chrome --web-port 3000'.
 
-This project is a starting point for a Flutter application.
+#### -And make sure the quill package is up-to-date.
 
-A few resources to get you started if this is your first Flutter project:
+![Login Page](assets/images/1.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Home Page](assets/images/2.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![File Page](assets/images/4.png)
+
+
+
+For more help please contact me on my email: malkoceren24@gmail.com
+
+![](assets/images/erenium.png)
+ 
