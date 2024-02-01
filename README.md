@@ -8,6 +8,8 @@
 
 #### -Run this command in the terminal to launch project: 'flutter run -d chrome --web-port 3000'.
 
+#### -Add your own MongoDB url link mine will not work.
+
 #### -And make sure the quill package is up-to-date.
 
 ![Login Page](assets/images/1.png)
