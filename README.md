@@ -12,11 +12,9 @@
 
 #### -And make sure the quill package is up-to-date.
 
-![Login Page](assets/images/1.png)
+![Login Page](assets/images/grup_7.png) 
 
-![Home Page](assets/images/2.png)
 
-![File Page](assets/images/4.1.png)
 
 
 
