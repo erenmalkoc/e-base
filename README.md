@@ -16,8 +16,6 @@
 
 
 
-
-
 For more help please contact me on my email: malkoceren24@gmail.com
 
 ![](assets/images/erenium.png)
