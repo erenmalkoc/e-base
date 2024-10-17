@@ -1,26 +1,59 @@
-# e-base File Editing Web App (Flutter/Dart)
+# E-base File Editing Web App
 
-Tech. I use :
+A web-based file editing application built with Flutter/Dart for the frontend, and Node.js, Express.js, and MongoDB for the backend. This application supports real-time file editing using **Socket.io** and a rich text editor powered by **Quill**. State management is handled with **Riverpod**.
 
--Node.js, -Socket.io(for real-time changes) -Express.js, -MongoDB, -Flutter/Dart, -Quill, -Riverpod.
+## Technologies Used
 
- Before start :
+- **Node.js**: Backend framework
+- **Socket.io**: Real-time changes in file editing
+- **Express.js**: Server framework
+- **MongoDB**: NoSQL database for storing data
+- **Flutter/Dart**: Frontend framework
+- **Quill**: Rich text editor
+- **Riverpod**: State management library for Flutter
 
- -Change the api url in the constants.dart file to your api url.
+## Getting Started
 
- -Run this command in the terminal to get the dependencies: 'flutter pub get'.
+### Prerequisites
 
- -Run this command in the terminal to launch project: 'flutter run -d chrome --web-port 3000'.
+Ensure you have the following installed:
 
- -Add your own MongoDB url link mine will not work.
+- Flutter SDK: [Install Flutter](https://flutter.dev/docs/get-started/install)
+- Node.js: [Install Node.js](https://nodejs.org/)
+- MongoDB: [Install MongoDB](https://www.mongodb.com/try/download/community)
 
- -And make sure the quill package is up-to-date.
+### Setup Instructions
 
-![Login Page](assets/images/grup_7.png) 
+1. **Change API URL:**
+   - Update the API URL in `constants.dart` to point to your backend server.
 
+2. **Install Flutter Dependencies:**
+   - Run the following command in the terminal to install the required Flutter packages:
+     ```bash
+     flutter pub get
+     ```
 
+3. **Launch the Project:**
+   - Use this command to run the project in a web environment (Chrome), using port 3000:
+     ```bash
+     flutter run -d chrome --web-port 3000
+     ```
 
-For more help please contact me on my email: malkoceren24@gmail.com
+4. **Configure MongoDB:**
+   - Update the MongoDB URL in the backend code to point to your own MongoDB instance.
 
-![](assets/images/erenium.png)
- 
+5. **Ensure Quill is Up-to-Date:**
+   - Check the [Quill package](https://pub.dev/packages/flutter_quill) and make sure it is the latest version.
+
+### Screenshot
+
+Login Page:
+
+![Login Page](assets/images/grup_7.png)
+
+### Support
+
+For any issues, please feel free to contact me via email: [malkoceren24@gmail.com](mailto:malkoceren24@gmail.com).
+
+![Erenium Logo](assets/images/erenium.png)
+
